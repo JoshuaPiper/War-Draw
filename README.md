@@ -5,3 +5,5 @@ This is a game that I invented during middle school. And I am trying to export i
 
 This game basically a dice-chess game but have multiple choices for every step.
 Currently in progress. (It should be quicker if I didn't reset my iPad :-< )
+
+Btw since I had my education before college in China, some documents are written in Chinese.
