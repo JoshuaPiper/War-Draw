@@ -1,0 +1,1890 @@
+
+--# Character
+Character = class()
+
+function Character:init(num)
+    -- you can accept and set parameters here
+    self.num = num
+    self.healthmax=4
+    self.health = 3
+    self.weapon={1,nil,nil}
+    self.tools={nil,nil,nil,nil}
+    self.judgement={0,0}
+    self.enlight=0
+    self.attacktime=1
+    self.rage=1
+    self.range=weaponrange[self.weapon[1]]
+end
+
+function Character:draw(ww,hh,rr)
+    if self.num==1 then
+        sprite("Documents:People1",ww,hh,rr)
+    elseif self.num==2 then
+        sprite("Documents:People2",ww,hh,rr)
+    elseif self.num==3 then
+        sprite("Documents:People3",ww,hh,rr)
+    elseif self.num==4 then
+        sprite("Documents:People4",ww,hh,rr)
+    elseif self.num==5 then
+        sprite("Documents:People5",ww,hh,rr)
+    elseif self.num==6 then
+        sprite("Documents:People6",ww,hh,rr)
+    elseif self.num==7 then
+        sprite("Documents:People7",ww,hh,rr)
+    elseif self.num==8 then
+        sprite("Documents:People8",ww,hh,rr)
+    elseif self.num==9 then
+        sprite("Documents:People9",ww,hh,rr)
+    elseif self.num==10 then
+        sprite("Documents:People10",ww,hh,rr)
+    elseif self.num==11 then
+        sprite("Documents:People11",ww,hh,rr)
+    elseif self.num==12 then
+        sprite("Documents:People12",ww,hh,rr)
+    elseif self.num==13 then
+        sprite("Documents:People13",ww,hh,rr)
+    elseif self.num==14 then
+        sprite("Documents:People14",ww+10,hh,rr)
+    end
+    if edge==1 then
+        sprite("Documents:Board",WIDTH-155,35,400)
+        sprite("Documents:Board",WIDTH-155,100,400)
+        sprite("Documents:Board",WIDTH-155,165,400)
+        sprite("Documents:Notice_Health",WIDTH-270,167,60)
+        sprite("Documents:Notice_Weapon",WIDTH-270,102,60)
+        sprite("Documents:Notice_Number",WIDTH-130,100,200)
+        sprite("Documents:Notice_Tools",WIDTH-270,37,60)
+        sprite("Documents:Notice_Number",WIDTH-130,35,200)
+        for j1=1,self.healthmax do
+            sprite("Documents:Notice_HealthEmpty",WIDTH-175+(j1-1)*30,167,35)
+        end
+        for j2=1,self.health do
+            sprite("Documents:Notice_HealthFull",WIDTH-175+(j2-1)*30,167,35)
+        end
+        tint(255, 255, 255, 200)
+        if self.weapon[1]==2 then
+            sprite("Documents:Weapon2",WIDTH-192,102,45)
+        elseif self.weapon[1]==3 then
+            sprite("Documents:Weapon3",WIDTH-192,102,45)
+        elseif self.weapon[1]==4 then
+            sprite("Documents:Weapon4",WIDTH-192,102,45)
+        elseif self.weapon[1]==5 then
+            sprite("Documents:Weapon5",WIDTH-192,102,45)
+        elseif self.weapon[1]==6 then
+            sprite("Documents:Weapon6",WIDTH-192,102,45)
+        elseif self.weapon[1]==7 then
+            sprite("Documents:Weapon7",WIDTH-192,102,45)
+        end
+        if self.weapon[3]==1 then
+            sprite("Documents:Glasses1",WIDTH-70,102,45)
+        elseif self.weapon[3]==2 then
+            sprite("Documents:Glasses2",WIDTH-70,102,45)
+        end
+        if self.weapon[2]==1 then
+            sprite("Documents:Shield1",WIDTH-133,102,45)
+        end
+        for i=1,3 do
+            if self.tools[i]==1 then
+                sprite("Documents:Tool1",WIDTH-192+60*(i-1),38,45)
+            end
+            if self.tools[i]==2 then
+                sprite("Documents:Tool2",WIDTH-192+60*(i-1),38,45)
+            end
+            if self.tools[i]==3 then
+                sprite("Documents:Tool3",WIDTH-192+60*(i-1),38,45)
+            end
+            
+            if self.tools[i]==4 then
+                sprite("Documents:Dice1",WIDTH-192+60*(i-1),38,45)
+            end
+            if self.tools[i]==5 then
+                sprite("Documents:Dice2",WIDTH-192+60*(i-1),38,45)
+            end
+            if self.tools[i]==6 then
+                sprite("Documents:Dice3",WIDTH-192+60*(i-1),38,45)
+            end
+            if self.tools[i]==7 then
+                sprite("Documents:Dice4",WIDTH-192+60*(i-1),38,45)
+            end
+            if self.tools[i]==8 then
+                sprite("Documents:Dice5",WIDTH-192+60*(i-1),38,45)
+            end
+            if self.tools[i]==9 then
+                sprite("Documents:Dice6",WIDTH-192+60*(i-1),38,45)
+            end
+        end
+        tint(255)
+    end
+    -- Codea does not automatically call this method
+end
+
+--# CharacterChess
+CharacterChess = class()
+
+function CharacterChess:init(num)
+    -- you can accept and set parameters here
+    self.num = num
+    self.randomx = math.random(-15,30)
+    self.randomy = math.random(-15,30)
+    self.pos = 1
+    self.x = c[self.pos].x+self.randomx
+    self.y = c[self.pos].y+self.randomy
+    self.position={x=self.x,y=self.y}
+    self.moved=0
+    self.time=0
+    self.finished=0
+end
+
+function CharacterChess:draw()
+    tint(alpha.tintd)
+    if self.num==1 then
+        sprite("Documents:Character1",self.position.x,self.position.y,50)
+    end
+    if self.num==2 then
+        sprite("Documents:Character2",self.position.x,self.position.y,50)
+    end
+    if self.num==3 then
+        sprite("Documents:Character3",self.position.x,self.position.y,50)
+    end
+    if self.num==4 then
+        sprite("Documents:Character4",self.position.x,self.position.y,50)
+    end
+    if self.num==5 then
+        sprite("Documents:Character5",self.position.x,self.position.y,50)
+    end
+    if self.num==6 then
+        sprite("Documents:Character6",self.position.x,self.position.y,50)
+    end
+    if self.num==7 then
+        sprite("Documents:Character7",self.position.x,self.position.y,50)
+    end
+    if self.num==12 then
+        sprite("Documents:Character12",self.position.x,self.position.y,50)
+    end
+    -- Codea does not automatically call this method
+    if dice.pressed2==1 then
+        playerchess[turn]:move(dice.d)
+    end
+end
+
+function CharacterChess:touched(touch)
+    self.position.x = self.position.x + CurrentTouch.deltaX
+    self.position.y = self.position.y + CurrentTouch.deltaY
+end
+
+function CharacterChess:move(x)
+    if self.moved==0 then
+        self.moved=1
+        self.time=ElapsedTime
+    end
+    if ElapsedTime-self.time>=1 and self.moved==1 then
+        if dice.d>0 then
+            self.pos = self.pos + 1/120
+            x = x - 1/120
+            dice.d = dice.d - 1/120
+            self.aa=math.floor(self.pos)+1
+            if self.aa>=66 then
+                self.aa = self.aa - 64
+            end
+            if math.floor(self.pos+0.5)>65 then
+                self.pos = self.pos - 64
+            end
+            self.aimx=c[self.aa].x+self.randomx
+            self.aimy=c[self.aa].y+self.randomy
+            self.position.x = self.position.x + (self.aimx-self.position.x)/60
+            self.position.y = self.position.y + (self.aimy-self.position.y)/60
+        end
+        -- Codea does not automatically call this method
+        if dice.d<=0 then
+            tturn=turn
+            self.active=math.floor(self.pos+0.5)
+            self.finished=action(c[self.active].about,self.active)
+            if self.finished==1 then
+                turn = turn + 1
+                if turn==6 then
+                    turn=1
+                end
+                if hide==1 and attack==0 and tturn~=turn then
+                    if player[turn].judgement[1]==0 then
+                        player[turn].judgement[1]=7
+                    elseif player[turn].judgement[1]==6 then
+                        player[turn].judgement[2]=7
+                    end
+                    hide=0
+                end
+                if attack==0 and tturn~=turn then
+                    if player[turn].judgement[2]==0 then
+                        attack=player[turn].judgement[1]
+                    else
+                        attack=player[turn].judgement[2]                
+                    end
+                end
+                if attack==3 or attack==4 then
+                    response(attack)
+                end
+                dice.pressed=0
+                dice.pressed2=0
+                edge=1
+                pmet=0
+                pressed3=0
+                self.time=0
+                self.moved=0
+                self.finished=0
+                self.pos = math.floor(self.pos+0.5)
+                alpha.tintd=255
+                alpha.tinte=30
+            end
+        end
+    end
+end
+
+--# CreateDatabase
+function CreateDatabase()
+    w=1/2*WIDTH
+    h=1/2*HEIGHT
+    ix=158
+    iy=158
+    c={
+    ChessProduction(w-ix,h,0,5),
+    ChessProduction(w,h,1,2),
+    ChessProduction(w+ix,h,2,1),
+    ChessProduction(w+2*ix,h,18,1),
+    ChessProduction(w+3*ix,h,1,3),
+    ChessProduction(w+4*ix,h,2,4),
+    ChessProduction(w+5*ix,h,21,5),
+    ChessProduction(w+6*ix,h,2,4),
+    ChessProduction(w+7*ix,h,23,1),
+    ChessProduction(w+8*ix,h,5,1),--10
+    ChessProduction(w+8*ix,h+iy,2,4),
+    ChessProduction(w+8*ix,h+2*iy,14,3),
+    ChessProduction(w+8*ix,h+3*iy,4,5),
+    ChessProduction(w+8*ix,h+4*iy,1,4),
+    ChessProduction(w+8*ix,h+5*iy,24,2),
+    ChessProduction(w+7*ix,h+5*iy,1,1),
+    ChessProduction(w+6*ix,h+5*iy,6,3),
+    ChessProduction(w+5*ix,h+5*iy,22,1),
+    ChessProduction(w+4*ix,h+5*iy,3,5),
+    ChessProduction(w+3*ix,h+5*iy,2,4),--20
+    ChessProduction(w+3*ix,h+6*iy,8,2),
+    ChessProduction(w+3*ix,h+7*iy,24,3),
+    ChessProduction(w+4*ix,h+7*iy,5,1),
+    ChessProduction(w+5*ix,h+7*iy,2,4),
+    ChessProduction(w+6*ix,h+7*iy,12,5),
+    ChessProduction(w+7*ix,h+7*iy,9,2),
+    ChessProduction(w+8*ix,h+7*iy,1,3),
+    ChessProduction(w+8*ix,h+8*iy,3,1),
+    ChessProduction(w+8*ix,h+9*iy,8,4),
+    ChessProduction(w+8*ix,h+10*iy,2,4),--30
+    ChessProduction(w+7*ix,h+10*iy,19,5),
+    ChessProduction(w+6*ix,h+10*iy,13,3),
+    ChessProduction(w+5*ix,h+10*iy,21,1),
+    ChessProduction(w+4*ix,h+10*iy,4,2),
+    ChessProduction(w+3*ix,h+10*iy,1,1),
+    ChessProduction(w+3*ix,h+11*iy,9,3),
+    ChessProduction(w+3*ix,h+12*iy,22,5),
+    ChessProduction(w+4*ix,h+12*iy,3,4),
+    ChessProduction(w+5*ix,h+12*iy,2,1),
+    ChessProduction(w+6*ix,h+12*iy,20,3),--40
+    ChessProduction(w+7*ix,h+12*iy,7,1),
+    ChessProduction(w+8*ix,h+12*iy,1,2),
+    ChessProduction(w+8*ix,h+13*iy,16,5),
+    ChessProduction(w+8*ix,h+14*iy,24,3),
+    ChessProduction(w+7*ix,h+14*iy,1,3),
+    ChessProduction(w+6*ix,h+14*iy,10,4),
+    ChessProduction(w+5*ix,h+14*iy,11,1),
+    ChessProduction(w+4*ix,h+14*iy,2,4),
+    ChessProduction(w+3*ix,h+14*iy,12,5),
+    ChessProduction(w+2*ix,h+14*iy,3,1),--50
+    ChessProduction(w+ix,h+14*iy,1,2),
+    ChessProduction(w,h+14*iy,17,3),
+    ChessProduction(w,h+13*iy,1,4),
+    ChessProduction(w,h+12*iy,6,3),
+    ChessProduction(w,h+11*iy,4,5),
+    ChessProduction(w,h+10*iy,5,3),
+    ChessProduction(w,h+9*iy,2,4),
+    ChessProduction(w,h+8*iy,3,4),
+    ChessProduction(w,h+7*iy,1,3),
+    ChessProduction(w,h+6*iy,15,2),--60
+    ChessProduction(w,h+5*iy,19,5),
+    ChessProduction(w,h+4*iy,1,2),
+    ChessProduction(w,h+3*iy,23,3),
+    ChessProduction(w,h+2*iy,9,4),
+    ChessProduction(w,h+iy,2,1)
+    }
+end
+
+function drawchess()
+    for k=1,65 do
+        c[k]:draw(c[k].x,c[k].y)
+    end
+end
+
+function touchchess()
+    for k=1,65 do
+        c[k]:touched(touch)
+    end
+end
+
+
+--# ChessProduction
+ChessProduction = class()
+
+function ChessProduction:init(x,y,about,colour)
+    -- you can accept and set parameters here
+    self.x = x
+    self.y = y
+    self.about = about
+    self.colour = colour
+    self.sn = self:judge(self.about)
+end
+
+function ChessProduction:getpositionx()
+    return self.x
+end
+
+function ChessProduction:getpositiony()
+    return self.y
+end
+
+function ChessProduction:draw(pox,poy)
+
+
+    -- Codea does not automatically call this method
+    if self.about==1 then
+        sprite("Documents:Chess1",pox,poy,128)
+    elseif self.about==2 then
+        sprite("Documents:Chess2",pox,poy,128)
+    elseif self.about==3 then
+        sprite("Documents:Chess3",pox,poy,128)
+    elseif self.about==4 then
+        sprite("Documents:Chess4",pox,poy,128)
+    elseif self.about==5 then
+        sprite("Documents:Chess5",pox,poy,128)
+    elseif self.about==6 then
+        sprite("Documents:Chess6",pox,poy,128)
+    elseif self.about==7 then
+        sprite("Documents:Chess7",pox,poy,128)
+    elseif self.about==8 then
+        sprite("Documents:Chess8",pox,poy,128)
+    elseif self.about==9 then
+        sprite("Documents:Chess9",pox,poy,128)
+    elseif self.about==10 then
+        sprite("Documents:Chess10",pox,poy,128)
+    elseif self.about==11 then
+        sprite("Documents:Chess11",pox,poy,128)
+    elseif self.about==12 then
+        sprite("Documents:Chess12",pox,poy,128)
+    elseif self.about==13 then
+        sprite("Documents:Chess13",pox,poy,128)
+    elseif self.about==14 then
+        sprite("Documents:Chess14",pox,poy,128)
+    elseif self.about==15 then
+        sprite("Documents:Chess15",pox,poy,128)
+    elseif self.about==16 then
+        sprite("Documents:Chess16",pox,poy,128)
+    elseif self.about==17 then
+        sprite("Documents:Chess17",pox,poy,128)
+    elseif self.about==18 then
+        sprite("Documents:Chess18",pox,poy,128)
+    elseif self.about==19 then
+        sprite("Documents:Chess19",pox,poy,128)
+    elseif self.about==20 then
+        sprite("Documents:Chess20",pox,poy,128)
+    elseif self.about==21 then
+        sprite("Documents:Chess21",pox,poy,128)
+    elseif self.about==22 then
+        sprite("Documents:Chess22",pox,poy,128)
+    elseif self.about==23 then
+        sprite("Documents:Chess23",pox,poy,128)
+    elseif self.about==24 then
+        sprite("Documents:Chess24",pox,poy,128)
+    end
+    if self.colour==1 then
+        sprite("Documents:Color1",pox,poy,180)
+    elseif self.colour==2 then
+        sprite("Documents:Color2",pox,poy,180)
+    elseif self.colour==3 then
+        sprite("Documents:Color3",pox,poy,180)
+    elseif self.colour==4 then
+        sprite("Documents:Color4",pox,poy,180)
+    elseif self.colour==5 then
+        sprite("Documents:Color5",pox,poy,180)
+    end
+end
+
+function ChessProduction:touched(touch)
+    -- Codea does not automatically call this method
+    self.x = self.x + CurrentTouch.deltaX
+    self.y = self.y + CurrentTouch.deltaY
+
+end
+
+-- ChessProduction:action() is in the ChessDatabase class
+
+function ChessProduction:judge(about)
+    if about==1 or about==5 or about==8 or about==9 or about==10 or about==19 then
+        return 1
+    else
+        return 0
+    end
+end
+
+--# CreateUI
+function CreateUI()
+    alpha={tinta=255,tintb=0,tintc=0,tintd=255,tinte=30}
+    weaponrange={1,1,2,3,3,5,4}
+    t=0
+    s=0
+    ka=0
+    min=0
+    fin=0
+    ttt=0
+    hold=0
+    pmet=0
+    hide=0
+    lock=0
+    tturn=0
+    light={0,0,0,0,0,0,0}
+    choose=0
+    attack=0
+    crecord=0
+    pressed2=0
+    pressed3=0
+    pressed4=0
+    pressable=0
+    finalhold=0
+    playernum=5
+    pressable2=0
+    edge=1
+    length={a=-1/2*WIDTH}
+    turn=1
+    dice=Dice()
+    playerchess={
+    CharacterChess(1),
+    CharacterChess(2),
+    CharacterChess(3),
+    CharacterChess(4),
+    CharacterChess(5)
+    }
+    player={
+    Character(1),
+    Character(2),
+    Character(3),
+    Character(4),
+    Character(5),
+    }
+end
+
+function UIDraw()
+    drawchess()
+    for i=1,5 do
+        playerchess[i]:draw()
+    end
+    if edge==1 then
+        sprite("Documents:Board_All",250,90,500)
+        status(attack)
+        --sprite("Documents:Board_Select",283,27,280)
+        dice:draw()
+        player[turn]:draw(WIDTH-160,330,400)
+    end
+end
+
+function status(a)
+    textMode(CENTER)
+    fontSize(30)
+    fill(40,40,50,180)
+    font("GillSans-Bold")
+    if a==0 then
+        text("Player"..turn.." "..":".." ".."playing",280,28)
+    elseif a==1 then
+        text("Player"..hold.." "..":".." ".."SHOOT",280,28)
+    elseif a==2 then
+        text("Player"..finalhold.." "..":".." ".."AIM",280,28)
+    elseif a==3 then
+        text("Player"..hold.." "..":".." ".."ASSAULT",280,28)
+    elseif a==4 then
+        text("Player"..hold.." "..":".." ".."FIRE",280,28)
+    elseif a==5 then
+        text("Player"..finalhold.." "..":".." ".."DUEL",280,28)    
+    elseif a==6 then
+        text("Player"..turn.." "..":".." ".."JAIL",280,28)
+    elseif a==7 then
+        text("Player"..turn.." "..":".." ".."DYNAMITE",280,28)
+    end
+end
+
+--# Dice
+Dice = class()
+
+function Dice:init()
+    -- you can accept and set parameters here
+    self.pressed=0
+    self.pressed2=0
+    self.playermove=0
+end
+
+function Dice:draw()
+    -- Codea does not automatically call this method
+    math.randomseed(math.random(1,1000))
+    if self.pressed==0 then
+        self.d = math.floor(math.random(1,6))
+    end
+    if self.d>=1 and self.d<2 then
+        sprite("Documents:Dice1",52,62,150)
+    elseif self.d>=2 and self.d<3 then
+        sprite("Documents:Dice2",52,62,150)
+    elseif self.d>=3 and self.d<4 then
+        sprite("Documents:Dice3",52,62,150)
+    elseif self.d>=4 and self.d<5 then
+        sprite("Documents:Dice4",52,62,150)
+    elseif self.d>=5 and self.d<6 then
+        sprite("Documents:Dice5",52,62,150)
+    elseif self.d>=6 and self.d<7 then
+        sprite("Documents:Dice6",52,62,150)
+    elseif self.d<1 then
+        sprite("Documents:Dice0",52,62,150)      
+    end
+end
+
+function Dice:touched(touch)
+    -- Codea does not automatically call this method
+    if CurrentTouch.x<=100 and CurrentTouch.y<=100 and CurrentTouch.state==BEGAN then
+        self.pressed = self.pressed + 1
+        self.pressed2 = 1
+        --sound(SOUND_RANDOM, 34851)
+    end
+
+end
+
+--# Main
+-- Chess
+displayMode(FULLSCREEN)
+supportedOrientations(LANDSCAPE_ANY)
+
+-- Use this function to perform your initial setup
+function setup()
+    CreateDatabase()
+    CreateUI()
+    music("Game Music One:Jungle Rampage",true,0.5)
+end
+
+-- This function gets called once every frame
+function draw()
+    -- This sets a dark background color 
+    background(40, 40, 50)
+    tint(alpha.tintd,alpha.tinta)
+    sprite("Documents:Background_White",1/2*WIDTH,1/2*HEIGHT,WIDTH)
+    tint(255,alpha.tintb)
+    sprite("Documents:Background_Grey",1/2*WIDTH,1/2*HEIGHT,WIDTH)
+    tint(255,alpha.tintc)
+    sprite("Documents:Background_Black",1/2*WIDTH,1/2*HEIGHT,WIDTH)
+    tint(alpha.tintd)
+    UIDraw()
+
+    -- This sets the line thickness
+    strokeWidth(5)
+
+    -- Do your drawing here
+    
+end
+
+function touched(touch)
+    touchchess()
+    dice:touched(touch)
+    for i =1,5 do
+        playerchess[i]:touched(touch)        
+    end
+
+end
+
+--# Action
+function action(kind,num)
+    alpha.tintd=200
+    temp=kind
+    kind=0
+    edge=0
+    
+    --alpha.tintb=255
+    --alpha.tinta=0
+    --tween(1,alpha,{tinta=0,tintb=255})
+    if pressed3 == 0 and pressed2 == 0 and pressed4 == 0 then
+        if c[num].sn==0 then
+            if attack>0 then
+                tint(255,70)
+                sprite("Documents:Board_BlueLong",1/2*WIDTH,11/20*HEIGHT,1300)
+                
+                notice2(attack,num)
+                
+                tint(255,alpha.tinte)
+                sprite("Documents:Choice_Yes",1/3*WIDTH,1/5*HEIGHT-20,250)
+                tint(255)
+                sprite("Documents:Board",8/20*WIDTH,0.44*HEIGHT,400)
+                sprite("Documents:Notice_Health",8/20*WIDTH-113,0.44*HEIGHT+2,60)
+                c[num]:draw(8/20*WIDTH,0.6*HEIGHT)
+                player[turn]:draw(12/20*WIDTH,0.59*HEIGHT,500)
+                for j1=1,player[turn].healthmax do
+                    sprite("Documents:Notice_HealthEmpty",8/20*WIDTH-30+(j1-1)*30,0.44*HEIGHT+2,35)
+                end
+                for j2=1,player[turn].health do
+                    sprite("Documents:Notice_HealthFull",8/20*WIDTH-30+(j2-1)*30,0.44*HEIGHT+2,35)
+                end   
+                sprite("Documents:Choice_No",2/3*WIDTH,1/5*HEIGHT-20,250)
+                if CurrentTouch.x>=2/3*WIDTH-125 
+                and CurrentTouch.x<=2/3*WIDTH+125 
+                and CurrentTouch.y>=1/5*HEIGHT-70
+                and CurrentTouch.y<=1/5*HEIGHT+30
+                and CurrentTouch.state==BEGAN then
+                    badresponse(attack,num)
+                    return 1
+                end
+                if CurrentTouch.x>=1/3*WIDTH-125 
+                and CurrentTouch.x<=1/3*WIDTH+125 
+                and CurrentTouch.y>=1/5*HEIGHT-70
+                and CurrentTouch.y<=1/5*HEIGHT+30
+                and CurrentTouch.state==BEGAN
+                and pressable==1 then   
+                    kind=temp
+                    if attack==1 and (c[num].colour==1 or c[num].colour==4) and player[turn].weapon[2]==1 and player[hold].weapon[1]~=4 then
+                        sound("Game Sounds One:Whoosh 3")
+                        if attack==1 and player[hold].weapon[1]==5 then
+                            player[hold].attacktime = player[hold].attacktime + 1
+                        end
+                        response(attack)
+                        return 1
+                    end
+                    if attack==2 or attack==6 or attack==7 then
+                        response(attack)
+                        return 1
+                    end
+                end
+            else
+                tint(255,70)
+                sprite("Documents:Board_BlueLong",1/2*WIDTH,11/20*HEIGHT,1300)
+                tint(255,alpha.tinte)
+                sprite("Documents:Choice_Yes",1/3*WIDTH,1/5*HEIGHT-20,250)
+                tint(255)
+                sprite("Documents:Board",8/20*WIDTH,0.44*HEIGHT,400)
+                sprite("Documents:Notice_Health",8/20*WIDTH-113,0.44*HEIGHT+2,60)
+                c[num]:draw(8/20*WIDTH,0.6*HEIGHT)
+                player[turn]:draw(12/20*WIDTH,0.59*HEIGHT,500)
+                for j1=1,player[turn].healthmax do
+                    sprite("Documents:Notice_HealthEmpty",8/20*WIDTH-30+(j1-1)*30,0.44*HEIGHT+2,35)
+                end
+                for j2=1,player[turn].health do
+                    sprite("Documents:Notice_HealthFull",8/20*WIDTH-30+(j2-1)*30,0.44*HEIGHT+2,35)
+                end
+                    
+                sprite("Documents:Choice_No",2/3*WIDTH,1/5*HEIGHT-20,250)
+                if CurrentTouch.x>=2/3*WIDTH-125 
+                and CurrentTouch.x<=2/3*WIDTH+125 
+                and CurrentTouch.y>=1/5*HEIGHT-70
+                and CurrentTouch.y<=1/5*HEIGHT+30
+                and CurrentTouch.state==BEGAN then
+                    badresponse(attack,num)
+                    return 1
+                end
+                if CurrentTouch.x>=1/3*WIDTH-125 
+                and CurrentTouch.x<=1/3*WIDTH+125 
+                and CurrentTouch.y>=1/5*HEIGHT-70
+                and CurrentTouch.y<=1/5*HEIGHT+30
+                and CurrentTouch.state==BEGAN
+                and pressable==1 then   
+                    kind=temp
+                end
+            end   
+        end
+        if c[num].sn==1 then
+            if attack>0 then
+                tint(255,70)
+                sprite("Documents:Board_BlueLong",1/2*WIDTH,11/20*HEIGHT,1300)
+                
+                notice2(attack,num)
+                
+                tint(255,alpha.tinte)
+                sprite("Documents:Choice_Yes",1/3*WIDTH,1/5*HEIGHT-20,250)
+                tint(255)
+                sprite("Documents:Board",8/20*WIDTH,0.44*HEIGHT,400)
+                sprite("Documents:Notice_Health",8/20*WIDTH-113,0.44*HEIGHT+2,60)
+                c[num]:draw(8/20*WIDTH,0.6*HEIGHT)
+                player[turn]:draw(12/20*WIDTH,0.59*HEIGHT,500)
+                for j1=1,player[turn].healthmax do
+                    sprite("Documents:Notice_HealthEmpty",8/20*WIDTH-30+(j1-1)*30,0.44*HEIGHT+2,35)
+                end
+                for j2=1,player[turn].health do
+                    sprite("Documents:Notice_HealthFull",8/20*WIDTH-30+(j2-1)*30,0.44*HEIGHT+2,35)
+                end   
+                sprite("Documents:Choice_No",2/3*WIDTH,1/5*HEIGHT-20,250)
+                if CurrentTouch.x>=2/3*WIDTH-125 
+                and CurrentTouch.x<=2/3*WIDTH+125 
+                and CurrentTouch.y>=1/5*HEIGHT-70
+                and CurrentTouch.y<=1/5*HEIGHT+30
+                and CurrentTouch.state==BEGAN then
+                    badresponse(attack,num)
+                    return 1
+                end
+                if CurrentTouch.x>=1/3*WIDTH-125 
+                and CurrentTouch.x<=1/3*WIDTH+125 
+                and CurrentTouch.y>=1/5*HEIGHT-70
+                and CurrentTouch.y<=1/5*HEIGHT+30
+                and CurrentTouch.state==BEGAN
+                and pressable==1 then   
+                    kind=temp
+                    if attack==1 and (c[num].colour==1 or c[num].colour==4) and player[turn].weapon[2]==1 and player[hold].weapon[1]~=4 then
+                        sound("Game Sounds One:Whoosh 3")
+                        if attack==1 and player[hold].weapon[1]==5 then
+                            player[hold].attacktime = player[hold].attacktime + 1
+                        end
+                        response(attack)
+                        return 1
+                    end
+                    if attack==2 or attack==6 or attack==7 then
+                        response(attack)
+                        return 1
+                    end
+                end
+            else
+                
+                notice2(attack,num)
+                
+                tint(255,70)
+                sprite("Documents:Board_Blue",3/10*WIDTH,3/5*HEIGHT,700)
+                sprite("Documents:Board_Red",8/10*WIDTH,2/5*HEIGHT,500)
+                tint(255,alpha.tinte)
+                sprite("Documents:Choice_Yes",1/3*WIDTH,1/5*HEIGHT-20,250)
+                tint(255)
+                sprite("Documents:Board",1/5*WIDTH,0.5*HEIGHT,400)
+                sprite("Documents:Notice_Health",1/5*WIDTH-113,0.5*HEIGHT+2,60)
+                c[num]:draw(1/5*WIDTH,0.64*HEIGHT+10)
+                player[turn]:draw(2/5*WIDTH,0.63*HEIGHT,470)
+                for j1=1,player[turn].healthmax do
+                    sprite("Documents:Notice_HealthEmpty",1/5*WIDTH-30+(j1-1)*30,0.5*HEIGHT+2,35)
+                end
+                for j2=1,player[turn].health do
+                    sprite("Documents:Notice_HealthFull",1/5*WIDTH-30+(j2-1)*30,0.5*HEIGHT+2,35)
+                end
+                for g=1,5 do
+                    if player[g].enlight==1 then
+                        choose=g
+                        sprite("Documents:Board",0.85*WIDTH-20,0.35*HEIGHT,350)
+                        sprite("Documents:Notice_Health",0.85*WIDTH-97,0.35*HEIGHT+1,47)
+                        for j1=1,player[g].healthmax do
+                            sprite("Documents:Notice_HealthEmpty",0.85*WIDTH-40+(j1-1)*28,0.35*HEIGHT+1,30)
+                        end
+                        for j2=1,player[g].health do
+                            sprite("Documents:Notice_HealthFull",0.85*WIDTH-40+(j2-1)*28,0.35*HEIGHT+1,30)
+                        end
+                        player[g]:draw(0.68*WIDTH-8,2/5*HEIGHT+15,330)
+                        ka = ka + 1
+                        alpha.tinte=255
+                    end
+                    ka = ka + 1
+                end
+                if ka==5 then
+                    sprite("Documents:People?",8/10*WIDTH,2/5*HEIGHT+15,350)
+                    alpha.tinte=30
+                    pressable=0
+                end
+                ka=0
+                sprite("Documents:Choice_No",2/3*WIDTH,1/5*HEIGHT-20,250)
+                --sprite("Documents:Board_Blue",length.a,3/5*HEIGHT,700)
+                --sprite("Documents:Board_Red",11/10*WIDTH-length.a,2/5*HEIGHT,500)
+                --tween(0.5,length,{a=3/10*WIDTH})
+                if player[turn].attacktime<=0 and temp==1 and player[turn].weapon[1]~=2 then
+                    alpha.tinte=30
+                    pressable=0
+                end
+                
+                if CurrentTouch.x>=8/10*WIDTH-175 
+                and CurrentTouch.x<=8/10*WIDTH+175 
+                and CurrentTouch.y>=2/5*HEIGHT-233 
+                and CurrentTouch.y<=2/5*HEIGHT+50 
+                and CurrentTouch.state==BEGAN then
+                    pressed3=1
+                end
+                if CurrentTouch.x>=2/3*WIDTH-125 
+                and CurrentTouch.x<=2/3*WIDTH+125 
+                and CurrentTouch.y>=1/5*HEIGHT-70
+                and CurrentTouch.y<=1/5*HEIGHT+30
+                and CurrentTouch.state==BEGAN then
+                    badresponse(attack,num)
+                    return 1
+                end
+                if CurrentTouch.x>=1/3*WIDTH-125 
+                and CurrentTouch.x<=1/3*WIDTH+125 
+                and CurrentTouch.y>=1/5*HEIGHT-70
+                and CurrentTouch.y<=1/5*HEIGHT+30
+                and CurrentTouch.state==BEGAN
+                and pressable==1 then   
+                    kind=temp
+                end
+            end
+
+        end
+    end
+    if pressed3==1 then
+        dedicate()
+    end
+    
+    if pressed2==1 then
+        discard()
+    end
+    
+    if pressed4==1 then
+        discard2()
+    end
+    
+    if fin==1 then
+        min=0
+        fin=0
+        pressable2=0
+        turn = turn - 1
+        return 1
+    end
+
+    if fin==2 then
+        min=0
+        fin=0
+        pressable2=0
+        return 1
+    end
+    
+    notice(attack,num)
+
+    if kind==1 then --Kill
+        sound("Game Sounds One:Pistol")
+        if attack==3 or attack==5 then
+            response(attack)
+            return 1
+        else
+            attack=1
+            player[turn].attacktime = player[turn].attacktime - 1
+            hold=turn
+            turn=choose-1
+            return 1
+        end
+    end
+    
+    if kind==2 then --Miss
+        sound("Game Sounds One:Whoosh 3")
+        if attack==1 and player[hold].weapon[1]==5 then
+            player[hold].attacktime = player[hold].attacktime + 1
+        end
+        response(attack)
+        return 1
+    end
+    
+    if kind==3 then
+        sound("Game Sounds One:Assembly 2")
+        player[turn].health = player[turn].health + 1
+        turn = turn - 1
+        return 1
+    end
+
+    if kind==4 then
+        sound("Game Sounds One:Male Grunt 2")
+        player[turn].rage = 2
+        turn = turn - 1
+        return 1
+    end
+    
+    if kind==5 then --Kill
+        sound("Game Sounds One:Reload 1")
+        attack=2
+        hold=turn
+        finalhold=turn
+        turn=choose-1
+        return 1
+    end
+    
+    if kind==6 then
+        sound("Game Sounds One:Crowd Boo")
+        attack=3
+        hold=turn
+        return 1
+    end
+    
+    if kind==7 then
+        sound("Game Sounds One:Explode Big")
+        attack=4
+        hold=turn
+        return 1
+    end
+    
+    if kind==8 then
+        sound("Game Sounds One:Reload 2")
+        attack=5
+        finalhold=turn
+        hold=turn
+        turn=choose-1
+        return 1
+    end
+    
+    if kind==9 or kind==10 then
+        sound("Game Sounds One:Assembly 1")
+        ttt=kind
+        pressed4=1
+    end
+    
+    if kind==11 then
+        sound("Game Sounds One:Crowd Cheer")
+        for i=1,5 do
+            if player[i].health < player[i].healthmax then
+                player[i].health = player[i].health + 1
+            end
+        end
+        turn = turn - 1
+        return 1
+    end
+    
+    if kind==12 and min==0 then
+        sound("Game Sounds One:Assembly 5")
+        for i=1,4 do
+            if player[turn].tools[i]==nil then
+                if min==0 then
+                    min=i
+                end
+            end
+        end
+        math.randomseed(math.random(1,1000))
+        player[turn].tools[min]=math.floor(math.random(2,4))
+        if player[turn].tools[min]==4 then
+            math.randomseed(math.random(1,1000))
+            player[turn].tools[min]=math.floor(math.random(4,9))
+        end
+        if min==4 then
+            pressed2=1
+        else
+            min = 0
+            turn = turn - 1
+            return 1
+        end
+    end
+    
+    if kind==13 or kind==14 or kind==15 or kind==16 or kind==17 or kind==18 then
+        sound("Game Sounds One:Assembly 7")
+        player[turn].weapon[1]=kind-11
+        player[turn].range=weaponrange[player[turn].weapon[1]]
+        turn = turn - 1
+        return 1
+    end
+    
+    if kind==22 or kind==23 then
+        sound("Game Sounds One:Assembly 7")
+        player[turn].weapon[3]=kind-21
+        turn = turn - 1
+        return 1
+    end
+    
+    if kind==24 then
+        sound("Game Sounds One:Assembly 7")
+        player[turn].weapon[2]=kind-23
+        turn = turn - 1
+        return 1
+    end
+    
+    if kind==19 then
+        sound("Game Sounds One:Assembly 4")
+        if player[choose].judgement[1]~=7 then
+            player[choose].judgement[1]=6
+        else
+            player[choose].judgement[2]=6
+        end
+        turn = turn - 1
+        return 1
+    end
+    
+    if kind==20 then
+        sound("Game Sounds One:Knock 1")
+        if player[turn].judgement[1]~=6 then
+            player[turn].judgement[1]=7
+        else
+            player[turn].judgement[2]=7
+        end
+        turn = turn - 1
+        return 1
+    end
+    
+    return 0     
+    
+end
+
+--# Discard
+function discard()
+    alpha.tintd=50
+    for i=1,4 do
+        tint(255-127*light[i])
+        if player[turn].tools[i]==1 then
+            sprite("Documents:Tool1",3/9*WIDTH+1/9*WIDTH*(i-1),3/5*HEIGHT,100)
+        end
+        if player[turn].tools[i]==2 then
+            sprite("Documents:Tool2",3/9*WIDTH+1/9*WIDTH*(i-1),3/5*HEIGHT,100)
+        end
+        if player[turn].tools[i]==3 then
+            sprite("Documents:Tool3",3/9*WIDTH+1/9*WIDTH*(i-1),3/5*HEIGHT,100)
+        end
+            
+        if player[turn].tools[i]==4 then
+            sprite("Documents:Dice1",3/9*WIDTH+1/9*WIDTH*(i-1),3/5*HEIGHT,100)
+        end
+        if player[turn].tools[i]==5 then
+            sprite("Documents:Dice2",3/9*WIDTH+1/9*WIDTH*(i-1),3/5*HEIGHT,100)
+        end
+        if player[turn].tools[i]==6 then
+            sprite("Documents:Dice3",3/9*WIDTH+1/9*WIDTH*(i-1),3/5*HEIGHT,100)
+        end
+        if player[turn].tools[i]==7 then
+            sprite("Documents:Dice4",3/9*WIDTH+1/9*WIDTH*(i-1),3/5*HEIGHT,100)
+        end
+        if player[turn].tools[i]==8 then
+            sprite("Documents:Dice5",3/9*WIDTH+1/9*WIDTH*(i-1),3/5*HEIGHT,100)
+        end
+        if player[turn].tools[i]==9 then
+            sprite("Documents:Dice6",3/9*WIDTH+1/9*WIDTH*(i-1),3/5*HEIGHT,100)
+        end
+    end
+    tint(128+127*pressable2)
+    sprite("Documents:Choice_Yes",1/2*WIDTH,2/5*HEIGHT,250)
+    if CurrentTouch.x>=3/9*WIDTH-50
+        and CurrentTouch.x<=3/9*WIDTH+50
+        and CurrentTouch.y>=3/5*HEIGHT-50
+        and CurrentTouch.y<=3/5*HEIGHT+50
+        and CurrentTouch.state==ENDED then
+        for q=1,4 do
+            light[q]=0
+        end
+        light[1]=1
+        pressable2=1
+    end
+    if CurrentTouch.x>=4/9*WIDTH-50
+        and CurrentTouch.x<=4/9*WIDTH+50
+        and CurrentTouch.y>=3/5*HEIGHT-50
+        and CurrentTouch.y<=3/5*HEIGHT+50
+        and CurrentTouch.state==ENDED then
+        for q=1,4 do
+            light[q]=0
+        end
+        light[2]=1
+        pressable2=1
+    end
+    if CurrentTouch.x>=5/9*WIDTH-50
+        and CurrentTouch.x<=5/9*WIDTH+50
+        and CurrentTouch.y>=3/5*HEIGHT-50
+        and CurrentTouch.y<=3/5*HEIGHT+50
+        and CurrentTouch.state==ENDED then
+        for q=1,4 do
+            light[q]=0
+        end
+        light[3]=1
+        pressable2=1
+    end
+    if CurrentTouch.x>=6/9*WIDTH-50
+        and CurrentTouch.x<=6/9*WIDTH+50
+        and CurrentTouch.y>=3/5*HEIGHT-50
+        and CurrentTouch.y<=3/5*HEIGHT+50
+        and CurrentTouch.state==ENDED then
+        for q=1,4 do
+            light[q]=0
+        end
+        light[4]=1
+        pressable2=1
+    end
+    if CurrentTouch.x>=1/2*WIDTH-125
+        and CurrentTouch.x<=1/2*WIDTH+125
+        and CurrentTouch.y>=2/5*HEIGHT-50
+        and CurrentTouch.y<=2/5*HEIGHT+50 
+        and CurrentTouch.state==ENDED 
+        and pressable2==1 then
+        for q=1,4 do
+            if light[q]==1 then
+                pressed2=0
+                fin=1
+                if q==4 then
+                    player[turn].tools[4]=nil
+                else
+                    for i=q+1,4 do
+                        player[turn].tools[i-1]=player[turn].tools[i]
+                    end
+                    player[turn].tools[4]=nil
+                end
+            end
+        end    
+    end
+end
+
+
+
+
+
+
+
+
+
+function discard2()
+    alpha.tintd=50
+    for i=1,4 do
+        tint(255-127*light[i])
+        if player[choose].tools[i]==1 then
+            sprite("Documents:Tool1",3/9*WIDTH+1/9*WIDTH*(i-1),1/2*HEIGHT,100)
+        end
+        if player[choose].tools[i]==2 then
+            sprite("Documents:Tool2",3/9*WIDTH+1/9*WIDTH*(i-1),1/2*HEIGHT,100)
+        end
+        if player[choose].tools[i]==3 then
+            sprite("Documents:Tool3",3/9*WIDTH+1/9*WIDTH*(i-1),1/2*HEIGHT,100)
+        end
+            
+        if player[choose].tools[i]==4 then
+            sprite("Documents:Dice1",3/9*WIDTH+1/9*WIDTH*(i-1),1/2*HEIGHT,100)
+        end
+        if player[choose].tools[i]==5 then
+            sprite("Documents:Dice2",3/9*WIDTH+1/9*WIDTH*(i-1),1/2*HEIGHT,100)
+        end
+        if player[choose].tools[i]==6 then
+            sprite("Documents:Dice3",3/9*WIDTH+1/9*WIDTH*(i-1),1/2*HEIGHT,100)
+        end
+        if player[choose].tools[i]==7 then
+            sprite("Documents:Dice4",3/9*WIDTH+1/9*WIDTH*(i-1),1/2*HEIGHT,100)
+        end
+        if player[choose].tools[i]==8 then
+            sprite("Documents:Dice5",3/9*WIDTH+1/9*WIDTH*(i-1),1/2*HEIGHT,100)
+        end
+        if player[choose].tools[i]==9 then
+            sprite("Documents:Dice6",3/9*WIDTH+1/9*WIDTH*(i-1),1/2*HEIGHT,100)
+        end
+    end
+    tint(255-127*light[5])
+    if player[choose].weapon[1]==2 then
+        sprite("Documents:Weapon2",4/9*WIDTH,7/10*HEIGHT,100)
+    elseif player[choose].weapon[1]==3 then
+        sprite("Documents:Weapon3",4/9*WIDTH,7/10*HEIGHT,100)
+    elseif player[choose].weapon[1]==4 then
+        sprite("Documents:Weapon4",4/9*WIDTH,7/10*HEIGHT,100)
+    elseif player[choose].weapon[1]==5 then
+        sprite("Documents:Weapon5",4/9*WIDTH,7/10*HEIGHT,100)
+    elseif player[choose].weapon[1]==6 then
+        sprite("Documents:Weapon6",4/9*WIDTH,7/10*HEIGHT,100)
+    elseif player[choose].weapon[1]==7 then
+        sprite("Documents:Weapon7",4/9*WIDTH,7/10*HEIGHT,100)
+    end
+    tint(255-127*light[7])
+    if player[choose].weapon[3]==1 then
+        sprite("Documents:Glasses1",6/9*WIDTH,7/10*HEIGHT,100)
+    elseif player[choose].weapon[3]==2 then
+        sprite("Documents:Glasses2",6/9*WIDTH,7/10*HEIGHT,100)
+    end
+    tint(255-127*light[6])
+    if player[choose].weapon[2]==1 then
+        sprite("Documents:Shield1",5/9*WIDTH,7/10*HEIGHT,100)
+    end
+    tint(128+127*pressable2)
+    sprite("Documents:Choice_Yes",1/3*WIDTH,3/10*HEIGHT,250)
+    tint(255)
+    sprite("Documents:Choice_No",2/3*WIDTH,3/10*HEIGHT,250)
+    if CurrentTouch.x>=3/9*WIDTH-50
+        and CurrentTouch.x<=3/9*WIDTH+50
+        and CurrentTouch.y>=1/2*HEIGHT-50
+        and CurrentTouch.y<=1/2*HEIGHT+50
+        and player[choose].tools[1]~=nil
+        and CurrentTouch.state==ENDED then
+        for q=1,7 do
+            light[q]=0
+        end
+        light[1]=1
+        pressable2=1
+    end
+    if CurrentTouch.x>=4/9*WIDTH-50
+        and CurrentTouch.x<=4/9*WIDTH+50
+        and CurrentTouch.y>=1/2*HEIGHT-50
+        and CurrentTouch.y<=1/2*HEIGHT+50
+        and player[choose].tools[2]~=nil
+        and CurrentTouch.state==ENDED then
+        for q=1,7 do
+            light[q]=0
+        end
+        light[2]=1
+        pressable2=1
+    end
+    if CurrentTouch.x>=5/9*WIDTH-50
+        and CurrentTouch.x<=5/9*WIDTH+50
+        and CurrentTouch.y>=1/2*HEIGHT-50
+        and CurrentTouch.y<=1/2*HEIGHT+50
+        and player[choose].tools[3]~=nil
+        and CurrentTouch.state==ENDED then
+        for q=1,7 do
+            light[q]=0
+        end
+        light[3]=1
+        pressable2=1
+    end
+    if CurrentTouch.x>=4/9*WIDTH-50
+        and CurrentTouch.x<=4/9*WIDTH+50
+        and CurrentTouch.y>=7/10*HEIGHT-50
+        and CurrentTouch.y<=7/10*HEIGHT+50
+        and player[choose].weapon[1]~=1
+        and CurrentTouch.state==ENDED then
+        for q=1,7 do
+            light[q]=0
+        end
+        light[5]=1
+        pressable2=1
+    end
+    if CurrentTouch.x>=5/9*WIDTH-50
+        and CurrentTouch.x<=5/9*WIDTH+50
+        and CurrentTouch.y>=7/10*HEIGHT-50
+        and CurrentTouch.y<=7/10*HEIGHT+50
+        and player[choose].weapon[2]~=nil
+        and CurrentTouch.state==ENDED then
+        for q=1,7 do
+            light[q]=0
+        end
+        light[6]=1
+        pressable2=1
+    end
+    if CurrentTouch.x>=6/9*WIDTH-50
+        and CurrentTouch.x<=6/9*WIDTH+50
+        and CurrentTouch.y>=7/10*HEIGHT-50
+        and CurrentTouch.y<=7/10*HEIGHT+50
+        and player[choose].weapon[3]~=nil
+        and CurrentTouch.state==ENDED then
+        for q=1,7 do
+            light[q]=0
+        end
+        light[7]=1
+        pressable2=1
+    end
+    if CurrentTouch.x>=1/3*WIDTH-125
+        and CurrentTouch.x<=1/3*WIDTH+125
+        and CurrentTouch.y>=3/10*HEIGHT-50
+        and CurrentTouch.y<=3/10*HEIGHT+50 
+        and CurrentTouch.state==ENDED 
+        and pressable2==1 then
+        if ttt==9 then
+            for q=1,7 do
+                if light[q]==1 then
+                    pressed4=0
+                    fin=1
+                    if q==3 then
+                        player[choose].tools[3]=nil
+                    elseif q<3 then
+                        for i=q+1,3 do
+                            player[choose].tools[i-1]=player[choose].tools[i]
+                        end
+                        player[choose].tools[3]=nil
+                    elseif q>3 then
+                        player[choose].weapon[q-4]=nil
+                    end
+                end
+            end
+        end
+        if ttt==10 then
+            for q=1,7 do
+                if light[q]==1 then
+                    if q==3 then
+                        pmet=player[choose].tools[3]
+                        player[choose].tools[3]=nil
+                    elseif q<3 then
+                        pmet=player[choose].tools[q]
+                        for i=q+1,3 do
+                            player[choose].tools[i-1]=player[choose].tools[i]
+                        end
+                        player[choose].tools[3]=nil
+                    elseif q>3 then
+                        player[turn].weapon[q-4]=player[choose].weapon[q-4]
+                        player[choose].weapon[q-4]=nil
+                        pressed4=0
+                        fin=1
+                    end
+                    if pmet~=0 then
+                        for i=1,4 do
+                            if player[turn].tools[i]==nil then
+                                if min==0 then
+                                    min=i
+                                end
+                            end
+                        end
+                        player[turn].tools[min]=pmet
+                        if min==4 then
+                            pressed4=0
+                            pressed2=1
+                        else
+                            pressed4=0
+                            fin=1
+                        end
+                    end
+                end
+            end 
+        end
+    end
+    if CurrentTouch.x>=2/3*WIDTH-125
+        and CurrentTouch.x<=2/3*WIDTH+125
+        and CurrentTouch.y>=3/10*HEIGHT-50
+        and CurrentTouch.y<=3/10*HEIGHT+50 
+        and CurrentTouch.state==ENDED then
+        pressed4=0
+        fin=2
+    end
+end
+
+--# Dedicate
+function dedicate()
+    alpha.tintd=50
+    tint(255,150)
+    sprite("Documents:Halo",1/2*WIDTH,1/2*HEIGHT,0.9*HEIGHT)
+    tint(128+127*player[1].enlight)
+    player[1]:draw(1/2*WIDTH,9/10*HEIGHT-30,350)
+    tint(128+127*player[2].enlight)
+    player[2]:draw(1/5*WIDTH,3/5*HEIGHT,350)
+    tint(128+127*player[3].enlight)
+    player[3]:draw(1/3*WIDTH,1/4*HEIGHT,350)
+    tint(128+127*player[4].enlight)
+    player[4]:draw(2/3*WIDTH,1/4*HEIGHT,350)
+    tint(128+127*player[5].enlight)
+    player[5]:draw(4/5*WIDTH,3/5*HEIGHT,350)
+    tint(128+127*pressable)
+    sprite("Documents:Choice_Yes",1/2*WIDTH,1/2*HEIGHT+30,250)
+    tint(255)
+    sprite("Documents:Choice_No",1/2*WIDTH,1/2*HEIGHT-30,250)
+    if CurrentTouch.x>=1/2*WIDTH-175 
+        and CurrentTouch.x<=1/2*WIDTH+175 
+        and CurrentTouch.y>=9/10*HEIGHT-233-30
+        and CurrentTouch.y<=9/10*HEIGHT+50-30
+        and CurrentTouch.state==ENDED then
+        for q=1,5 do
+            player[q].enlight=0
+        end
+        player[1].enlight=1
+        if temp==1 or temp==10 then
+            s=math.abs(1-turn)
+            if math.abs(1-turn)>=math.floor(1/2*playernum+0.5) then
+                s=playernum-s
+            end
+            if player[1].weapon[3]==2 then
+                s = s + 1
+            end
+            if player[turn].weapon[3]==1 then
+                s = s - 1
+            end
+            if temp==1 then
+                if s<=player[turn].range then
+                    pressable=1
+                else
+                    pressable=0
+                end
+            end
+            if temp==10 then
+                if s<=1 then
+                    pressable=1
+                else
+                    pressable=0
+                end
+            end
+        else
+            pressable=1
+        end
+    end
+    if CurrentTouch.x>=1/3*WIDTH-175 
+        and CurrentTouch.x<=1/3*WIDTH+175 
+        and CurrentTouch.y>=1/4*HEIGHT-233 
+        and CurrentTouch.y<=1/4*HEIGHT+50 
+        and CurrentTouch.state==ENDED then
+        for q=1,5 do
+            player[q].enlight=0
+        end
+        player[3].enlight=1
+        if temp==1 or temp==10 then
+            s=math.abs(3-turn)
+            if math.abs(3-turn)>=math.floor(1/2*playernum+0.5) then
+                s=playernum-s
+            end
+            if player[3].weapon[3]==2 then
+                s = s + 1
+            end
+            if player[turn].weapon[3]==1 then
+                s = s - 1
+            end
+            if temp==1 then
+                if s<=player[turn].range then
+                    pressable=1
+                else
+                    pressable=0
+                end
+            end
+            if temp==10 then
+                if s<=1 then
+                    pressable=1
+                else
+                    pressable=0
+                end
+            end
+        else
+            pressable=1
+        end
+    end
+    if CurrentTouch.x>=2/3*WIDTH-175 
+        and CurrentTouch.x<=2/3*WIDTH+175 
+        and CurrentTouch.y>=1/4*HEIGHT-233 
+        and CurrentTouch.y<=1/4*HEIGHT+50 
+        and CurrentTouch.state==ENDED then
+        for q=1,5 do
+            player[q].enlight=0
+        end
+        player[4].enlight=1
+        if temp==1 or temp==10 then
+            s=math.abs(4-turn)
+            if math.abs(4-turn)>=math.floor(1/2*playernum+0.5) then
+                s=playernum-s
+            end
+            if player[4].weapon[3]==2 then
+                s = s + 1
+            end
+            if player[turn].weapon[3]==1 then
+                s = s - 1
+            end
+            if temp==1 then
+                if s<=player[turn].range then
+                    pressable=1
+                else
+                    pressable=0
+                end
+            end
+            if temp==10 then
+                if s<=1 then
+                    pressable=1
+                else
+                    pressable=0
+                end
+            end
+        else
+            pressable=1
+        end
+    end
+    if CurrentTouch.x>=1/5*WIDTH-175 
+        and CurrentTouch.x<=1/5*WIDTH+175 
+        and CurrentTouch.y>=3/5*HEIGHT-233 
+        and CurrentTouch.y<=3/5*HEIGHT+50 
+        and CurrentTouch.state==ENDED then
+        for q=1,5 do
+            player[q].enlight=0
+        end
+        player[2].enlight=1
+        if temp==1 or temp==10 then
+            s=math.abs(2-turn)
+            if math.abs(2-turn)>=math.floor(1/2*playernum+0.5) then
+                s=playernum-s
+            end
+            if player[2].weapon[3]==2 then
+                s = s + 1
+            end
+            if player[turn].weapon[3]==1 then
+                s = s - 1
+            end
+            if temp==1 then
+                if s<=player[turn].range then
+                    pressable=1
+                else
+                    pressable=0
+                end
+            end
+            if temp==10 then
+                if s<=1 then
+                    pressable=1
+                else
+                    pressable=0
+                end
+            end
+        else
+            pressable=1
+        end
+    end
+    if CurrentTouch.x>=4/5*WIDTH-175 
+        and CurrentTouch.x<=4/5*WIDTH+175 
+        and CurrentTouch.y>=3/5*HEIGHT-233 
+        and CurrentTouch.y<=3/5*HEIGHT+50 
+        and CurrentTouch.state==ENDED then
+        for q=1,5 do
+            player[q].enlight=0
+        end
+        player[5].enlight=1
+        if temp==1 or temp==10 then
+            s=math.abs(5-turn)
+            if math.abs(5-turn)>=math.floor(1/2*playernum+0.5) then
+                s=playernum-s
+            end
+            if player[5].weapon[3]==2 then
+                s = s + 1
+            end
+            if player[turn].weapon[3]==1 then
+                s = s - 1
+            end
+            if temp==1 then
+                if s<=player[turn].range then
+                    pressable=1
+                else
+                    pressable=0
+                end
+            end
+            if temp==10 then
+                if s<=1 then
+                    pressable=1
+                else
+                    pressable=0
+                end
+            end
+        else
+            pressable=1
+        end
+    end
+    for q=1,5 do
+        if player[q].enlight==1 and q==turn and (temp==1 or temp==19 or temp==8 or temp==9 or temp==10) then
+            pressable=0
+        end
+    end
+    if CurrentTouch.x>=1/2*WIDTH-125
+        and CurrentTouch.x<=1/2*WIDTH+125
+        and CurrentTouch.y>=1/2*HEIGHT-20
+        and CurrentTouch.y<=1/2*HEIGHT+80
+        and CurrentTouch.state==ENDED 
+        and pressable==1 then
+        for q=1,5 do
+            if player[q].enlight==1 then
+                pressed3=0
+            end
+        end
+                
+    end
+    if CurrentTouch.x>=1/2*WIDTH-125
+        and CurrentTouch.x<=1/2*WIDTH+125
+        and CurrentTouch.y>=1/2*HEIGHT-80
+        and CurrentTouch.y<=1/2*HEIGHT+20
+        and CurrentTouch.state==ENDED 
+        and pressable==1 then
+        for q=1,5 do
+            player[q].enlight=0
+            pressed3=0
+        end
+                
+    end
+end
+--# Notice
+function notice(a,b)
+    if a==1 and temp==2 then
+        alpha.tinte=255
+        pressable=1
+    end
+    if a==1 and (c[b].colour==1 or c[b].colour==4) and player[turn].weapon[2]==1 then
+        alpha.tinte=255
+        pressable=1
+    end
+    if a==2 and c[b].colour==crecord and t~=0 then
+        alpha.tinte=255
+        pressable=1        
+    end
+    if a==3 and temp==1 then
+        alpha.tinte=255
+        pressable=1
+    end
+    if a==4 and temp==2 then
+        alpha.tinte=255
+        pressable=1
+    end
+    if a==5 and temp==1 and player[turn].attacktime>0 then
+        alpha.tinte=255
+        pressable=1
+    end
+    if a==6 and c[b].colour==1 then
+        alpha.tinte=255
+        pressable=1          
+    end
+    if a==7 and c[b].colour~=5 then
+        alpha.tinte=255
+        pressable=1          
+    end
+    if a==0 and temp==3 and player[turn].health < player[turn].healthmax then
+        alpha.tinte=255
+        pressable=1
+    end
+    if a==0 and temp==4 then
+        alpha.tinte=255
+        pressable=1
+    end
+    if a==0 and temp==6 then
+        alpha.tinte=255
+        pressable=1        
+    end
+    if a==0 and temp==7 then
+        alpha.tinte=255
+        pressable=1        
+    end
+    if a==0 and temp==11 and player[turn].rage==1 then
+        alpha.tinte=255
+        pressable=1
+    end
+    if a==0 and temp==12 then
+        alpha.tinte=255
+        pressable=1
+    end
+    if a==0 and (temp==13 or temp==14 or temp==15 or temp==16 or temp==17 or temp==18) then
+        alpha.tinte=255
+        pressable=1  
+    end
+    if a==0 and (temp==22 or temp==23) then
+        alpha.tinte=255
+        pressable=1
+    end
+    if a==0 and temp==24 then
+        alpha.tinte=255
+        pressable=1
+    end
+    if a==0 and temp==20 and player[turn].judgement[1]==0 then
+        alpha.tinte=255
+        pressable=1        
+    end
+end
+
+--# Notice2
+function notice2(a,b)
+    if a==0 and player[turn].attacktime<=0 and temp==1 and player[turn].weapon[1]~=2 then
+        pressable=0
+        alpha.tinte=30
+    end
+    if a==1 and player[hold].weapon[1]==3 and temp==2 and c[b].colour~=1 then
+        pressable=0
+        alpha.tinte=30     
+    end
+    if a==1 and temp~=2 and player[turn].weapon[2]~=1 then
+        pressable=0
+        alpha.tinte=30
+    end
+    if a==1 and (c[b].colour==2 or c[b].colour==3 or c[b].colour==5) and player[turn].weapon[2]==1 then
+        pressable=0
+        alpha.tinte=30
+    end
+    if a==2 and t==0 then
+        pressable=0
+        alpha.tinte=30                    
+    end
+    if a==3 and temp~=1 then
+        pressable=0
+        alpha.tinte=30        
+    end
+    if a==4 and temp~=2 then
+        pressable=0
+        alpha.tinte=30        
+    end
+    if a==5 and temp~=1 then
+        pressable=0
+        alpha.tinte=30       
+    end
+    if a==6 and c[b].colour~=1 then
+        pressable=0
+        alpha.tinte=30          
+    end
+    if a==7 and c[b].colour==5 then
+        pressable=0
+        alpha.tinte=30          
+    end
+end
+
+--# Response
+function response(a)
+    if a==1 then
+        attack=0
+        if hold==1 then
+            turn=5
+        else
+            turn=hold-1          
+        end
+        hold=0
+        pressable=0
+        choose=0
+        for q=1,5 do
+             player[q].enlight=0
+        end
+    end
+    if a==2 then
+        sound("Game Sounds One:Punch 1")
+        player[t].health = player[t].health - 1
+        t=0
+        crecord=0
+        player[turn].attacktime=1
+        player[turn].rage=1
+        pressable=0
+        hold=0
+        finalhold=0
+        attack=0
+        choose=0
+        for q=1,5 do
+            player[q].enlight=0
+        end
+        turn = turn - 1
+    end
+    if a==3 or a==4 then
+        if hold==turn then
+            attack=0
+            hold=0
+            pressable=0
+        end
+    end
+    if a==5 then
+        choose=hold
+        hold=turn
+        turn=choose-1
+    end
+    if a==6 then
+        if player[turn].judgement[2]==6 and player[turn].judgement[1]==7 then
+            player[turn].judgement[2]=0
+            attack=0
+            turn = turn - 1
+            tturn=0
+        else
+            player[turn].judgement={0,0}
+            pressable=0
+            hold=0
+            attack=0
+            choose=0
+            for q=1,5 do
+                player[q].enlight=0
+            end
+            turn = turn - 1
+        end
+    end
+    if a==7 then
+        if player[turn].judgement[2]==7 and player[turn].judgement[1]==6 then
+            player[turn].judgement[2]=0
+            attack=0
+            turn = turn - 1
+            tturn=0
+        else
+            player[turn].judgement={0,0}
+            pressable=0
+            hold=0
+            attack=0
+            choose=0
+            for q=1,5 do
+                player[q].enlight=0
+            end
+            turn = turn - 1
+        end
+        hide=1       
+    end
+end
+
+--# BadResponse
+function badresponse(a,b)
+    if a==1 then
+        sound("Game Sounds One:Male Grunt 3")
+        player[turn].health = player[turn].health - player[hold].rage
+        player[hold].rage = 1
+        if player[hold].weapon[1]==7 and player[turn].weapon[3]~=nil then
+            player[turn].weapon[3]=nil
+        end
+        attack=0
+        if hold==1 then
+            turn=5
+        else
+            turn=hold-1          
+        end
+        hold=0
+        pressable=0
+        choose=0
+        for q=1,5 do
+             player[q].enlight=0
+        end
+    elseif a==2 then
+        if t==0 then
+            crecord=c[b].colour
+            t=turn
+            if hold==1 then
+                turn=5
+            else
+                turn=hold-1          
+            end
+            hold=0
+            pressable=0
+            choose=0
+            for q=1,5 do
+                player[q].enlight=0
+            end    
+        else
+            t=0
+            crecord=0
+            player[turn].attacktime=1
+            player[turn].rage=1
+            pressable=0
+            hold=0
+            finalhold=0
+            attack=0
+            choose=0
+            for q=1,5 do
+                player[q].enlight=0
+            end
+            turn = turn - 1
+        end
+    elseif a==3 or a==4 then
+        player[turn].health = player[turn].health - 1
+        pressable=0
+        sound("Game Sounds One:Male Grunt 3")
+    elseif a==5 then
+        sound("Game Sounds One:Male Grunt 3")
+        player[turn].health = player[turn].health - 1
+        turn=finalhold-1
+        hold=0
+        attack=0
+        choose=0
+        finalhold=0
+        for q=1,5 do
+            player[q].enlight=0
+        end        
+    elseif a==6 then
+        if player[turn].judgement[2]==6 and player[turn].judgement[1]==7 then
+            player[turn].judgement[2]=0
+            attack=0
+            lock=1
+            turn = turn - 1
+            tturn=0
+        else
+            player[turn].judgement={0,0}
+            pressable=0
+            hold=0
+            attack=0
+            choose=0
+            for q=1,5 do
+                player[q].enlight=0
+            end
+        end
+    elseif a==7 then
+        sound("Game Sounds One:Explode 1")
+        player[turn].health = player[turn].health - 3
+        if player[turn].judgement[2]==6 and player[turn].judgement[1]==7 then
+            player[turn].judgement[2]=0
+            attack=0
+            turn = turn - 1
+            tturn=0
+        else
+            player[turn].judgement={0,0}
+            pressable=0
+            hold=0
+            attack=0
+            choose=0
+            for q=1,5 do
+                player[q].enlight=0
+            end
+            if lock==0 then
+                turn = turn - 1
+            else
+                lock=0
+            end
+        end
+    else
+        player[turn].attacktime=1
+        player[turn].rage=1
+        pressable=0
+        hold=0
+        attack=0
+        choose=0
+        for q=1,5 do
+            player[q].enlight=0
+        end
+    end
+end
+
